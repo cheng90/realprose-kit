@@ -1,0 +1,23 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync --python ${{ matrix.python-version }}
+      - name: core is dependency-free
+        # the whole point of the package is that none of this needs torch
+        run: uv run python -c "import sys, textscore; bad=[m for m in ('torch','transformers','numpy','sklearn','datasets') if m in sys.modules]; assert not bad, f'heavy import leaked: {bad}'"
+      - run: uv run pytest -q

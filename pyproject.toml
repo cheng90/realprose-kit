@@ -1,0 +1,37 @@
+[project]
+name = "textscore"
+version = "0.1.0"
+description = "Zero-dependency sentence segmentation, per-span score aggregation, confidence labelling and leak-safe logging for text-classifier UIs."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+keywords = ["nlp", "segmentation", "aggregation", "calibration", "logging", "highlighting"]
+classifiers = [
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Text Processing :: Linguistic",
+]
+dependencies = []
+
+[project.scripts]
+textscore = "textscore.cli:main"
+
+[project.optional-dependencies]
+bench = [
+  "datasets>=3.0",
+  "torch>=2.4",
+  "transformers>=4.44",
+]
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/textscore"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
