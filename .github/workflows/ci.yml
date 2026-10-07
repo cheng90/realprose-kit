@@ -19,5 +19,13 @@ jobs:
       - run: uv sync --python ${{ matrix.python-version }}
       - name: core is dependency-free
         # the whole point of the package is that none of this needs torch
-        run: uv run python -c "import sys, textscore; bad=[m for m in ('torch','transformers','numpy','sklearn','datasets') if m in sys.modules]; assert not bad, f'heavy import leaked: {bad}'"
+        run: |
+          uv run python - <<'PY'
+          import sys
+          import textscore
+
+          heavy = [m for m in ("torch", "transformers", "numpy", "sklearn", "datasets") if m in sys.modules]
+          assert not heavy, f"heavy import leaked: {heavy}"
+          print("core imports clean, no heavy dependency reachable")
+          PY
       - run: uv run pytest -q
