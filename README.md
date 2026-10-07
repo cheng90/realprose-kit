@@ -1,5 +1,7 @@
 # textscore
 
+[![ci](https://github.com/cheng90/realprose-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/cheng90/realprose-kit/actions/workflows/ci.yml)
+
 > Repo: [`cheng90/realprose-kit`](https://github.com/cheng90/realprose-kit) · Python package: `textscore`
 
 **Post-model plumbing for span-level text classifiers: sentence segmentation with
